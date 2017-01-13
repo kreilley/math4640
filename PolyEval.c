@@ -14,28 +14,32 @@ int main(){
     int polyeval(int,int);
     int b10toarb(int,int);
     int convertBase(int,int,int);
-    double convertBaseFP(double,int,int);
-    int a = -11011;
-    int b = 2;
+    //double convertBaseFP(double,int,int);
+    int a = 0xa;
+    int b = 16;
     int pofb = convertBase(a,b,10);
     printf("number %d in base %d is number %d in base 10\n",a,b,pofb);
-    int numofb = convertBase(pofb,10,b);
-    printf("number %d in base 10 is number %d in base %d\n",pofb,numofb,b);
+    int pofpofb = convertBase(pofb,10,2);
+    printf("number %d in base 10 is number %d in base 2\n",pofb,pofpofb);
+
+    int numofb = convertBase(pofb,2,b);
+    printf("number %d in base 2 is number %d in base %d\n",pofb,numofb,b);
     
     int number1 = 9;
     int number2 = 10;
     int number3 = number1/number2;
     printf("result of 9/10 integer is %d\n",number3);
     
-    int origNum = convertBase(convertBase(a,b,10),10,b);
+    int origNum = convertBase(convertBase(a,b,8),8,b);
     printf("convertBase should be reversible such that \n %d should equal %d\n",a,origNum);
     printf("end integer test, start float test\n");
+    /*
     double f1 = 0.01;
     int b1 = 2;
     int b2 = 10;
     double fpnum = convertBaseFP(f1,b1,b2);
     printf("number %f in base %d is number %f in base %d\n",f1,b1,fpnum,b2);
-
+    */
     return 0;
 }
 
@@ -72,8 +76,9 @@ int convertBase(int sourceNum, int sourceBase, int targetBase)
     return (num % targetBase) + convertBase(num/targetBase,sourceBase,targetBase)*sourceBase;
 }
 
+/*
 // handle floats
-//
+// broken
 double convertBaseFP(double sourceNum, int sourceBase, int targetBase)
 {
     double num = sourceNum;
@@ -81,8 +86,6 @@ double convertBaseFP(double sourceNum, int sourceBase, int targetBase)
 	return num % targetBase;
     return (num % targetBase) + convertBaseFP(num/targetBase,sourceBase,targetBase)*sourceBase;
 }
-
-
-
+*/
 
 
