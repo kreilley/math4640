@@ -8,12 +8,13 @@
 
 #include <stdio.h>
 #include "PolyEval.h"
-
+#include <math.h>
 
 int main(){
     int polyeval(int,int);
     int b10toarb(int,int);
     int convertBase(int,int,int);
+    double convertBaseFP(double,int,int);
     int a = -11011;
     int b = 2;
     int pofb = convertBase(a,b,10);
@@ -28,7 +29,13 @@ int main(){
     
     int origNum = convertBase(convertBase(a,b,10),10,b);
     printf("convertBase should be reversible such that \n %d should equal %d\n",a,origNum);
-    
+    printf("end integer test, start float test\n");
+    double f1 = 0.01;
+    int b1 = 2;
+    int b2 = 10;
+    double fpnum = convertBaseFP(f1,b1,b2);
+    printf("number %f in base %d is number %f in base %d\n",f1,b1,fpnum,b2);
+
     return 0;
 }
 
@@ -65,6 +72,15 @@ int convertBase(int sourceNum, int sourceBase, int targetBase)
     return (num % targetBase) + convertBase(num/targetBase,sourceBase,targetBase)*sourceBase;
 }
 
+// handle floats
+//
+double convertBaseFP(double sourceNum, int sourceBase, int targetBase)
+{
+    double num = sourceNum;
+    if(floor(num/targetBase)==0)
+	return num % targetBase;
+    return (num % targetBase) + convertBaseFP(num/targetBase,sourceBase,targetBase)*sourceBase;
+}
 
 
 
