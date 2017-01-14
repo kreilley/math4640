@@ -15,7 +15,7 @@ int main(){
     int b10toarb(int,int);
     int convertBase(int,int,int);
     //double convertBaseFP(double,int,int);
-    int a = 0xa;
+    int a = 11;
     int b = 16;
     int pofb = convertBase(a,b,10);
     printf("number %d in base %d is number %d in base 10\n",a,b,pofb);
@@ -33,6 +33,9 @@ int main(){
     int origNum = convertBase(convertBase(a,b,8),8,b);
     printf("convertBase should be reversible such that \n %d should equal %d\n",a,origNum);
     printf("end integer test, start float test\n");
+    
+    
+    
     /*
     double f1 = 0.01;
     int b1 = 2;
@@ -87,5 +90,7 @@ double convertBaseFP(double sourceNum, int sourceBase, int targetBase)
     return (num % targetBase) + convertBaseFP(num/targetBase,sourceBase,targetBase)*sourceBase;
 }
 */
-
+/*
+ * What we really need is a means for 
+ */
 
