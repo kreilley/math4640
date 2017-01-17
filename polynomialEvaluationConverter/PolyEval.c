@@ -15,8 +15,8 @@ int main(){
     int b10toarb(int,int);
     int convertBase(int,int,int);
     //double convertBaseFP(double,int,int);
-    int a = 11;
-    int b = 16;
+    int a = 1111111;
+    int b = 2;
     int pofb = convertBase(a,b,10);
     printf("number %d in base %d is number %d in base 10\n",a,b,pofb);
     int pofpofb = convertBase(pofb,10,2);
