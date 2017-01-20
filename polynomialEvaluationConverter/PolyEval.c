@@ -12,10 +12,11 @@
 int polyeval(int,int);
 int b10toarb(int,int);
 int convertBase(int,int,int);
-int convertBaseDEC(float,float,float);
+float convertBaseDEC(float,float,float);
 void testPolyEval(int,int);
 void testBarb(int,int);
 void testConvertBase(int,int,int);
+void testConvertBaseDEC(float,float,float);
 
 
 int main(){
@@ -98,6 +99,24 @@ int main(){
     int bttt5 = 10;
     testConvertBase(attt5,bstt5,bttt5);
     
+    //convertBaseDEC cases
+    printf("\ntesting convertBaseDEC\n");
+    //case 1
+    float num1f = 0.101;
+    float base1s = 2.0;
+    float basetarget1 = 10.0;
+    testConvertBaseDEC(num1f,base1s,basetarget1);
+    //case 2
+    float num2f = 0.11101010101;
+    float base2s = 2.0;
+    float basetarget2 = 10.0;
+    testConvertBaseDEC(num2f,base2s,basetarget2);
+    //case 3
+    float num3f = 0.109375;
+    float base3s = 10.0;
+    float basetarget3 = 2.0;
+    testConvertBaseDEC(num3f,base3s,basetarget3);
+    
     
     
     
@@ -160,18 +179,28 @@ void testConvertBase(int sourceNum, int sourceBase, int targetBase)
 
 //current testing
 
-int convertBaseDEC(float sourceNum, float sourceBase, float targetBase)
+float convertBaseDEC(float sourceNum, float sourceBase, float targetBase)
 {
-    float param, fractpart, intpart;
+    float num = sourceNum;
+    float CurrentFraction, CurrentIntegerPart;
     
-    param = 3.14159265;
-    fractpart = modff(param , &intpart);
-    int reCaster1 = (int) fractpart;
-    int reCaster2 = (int) intpart;
-    printf("the orig value = %.1f\n the new value = %d\n",intpart,reCaster2);
-    printf("the orig value = %.1f\n the new value = %d\n",fractpart,reCaster1);
-    
-    return 0;
+    if(fabsf(num)<1.0){
+        CurrentFraction = modff(num,&CurrentIntegerPart);
+    }else{
+        CurrentFraction = modff(num,&CurrentIntegerPart);
+        float test = floor(num/targetBase);
+        int testAsInt = (int) test;
+        if(testAsInt==0)
+            return CurrentIntegerPart;
+    }
+    return CurrentIntegerPart + convertBaseDEC(CurrentFraction*targetBase,sourceBase,targetBase)/sourceBase;
+}
+
+void testConvertBaseDEC(float sourceNum, float sourceBase, float targetBase)
+{
+    float outnum = convertBaseDEC(sourceNum,sourceBase,targetBase);
+    printf("res = %f in base %f for anum = %f in base %f\n",outnum,targetBase,sourceNum,sourceBase);
+    return;
 }
 
 /*
