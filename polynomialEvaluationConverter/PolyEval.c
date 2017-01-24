@@ -148,7 +148,7 @@ int b10toarb(int base, int anum)
     int num = anum;
     if(num/base == 0)
         return num % base;
-    return (num % base) + 10*b10toarb(base,num/base);
+  return (num % base) + 10*b10toarb(base,num/base);
 }
 
 void testBarb(int base, int anum)
