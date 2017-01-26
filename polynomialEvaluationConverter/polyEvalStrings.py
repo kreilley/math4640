@@ -7,39 +7,61 @@ import argparse
 def polynomialSplitter(somestringwithnumbers,sourceBase,targetBase):
 	alen = len(somestringwithnumbers)
 	components = re.split("\.",somestringwithnumbers)
-	hasDec = len(components)#print(components[0] + '\n')
-	a1 = str(integerPolynomial(components[0],sourceBase,targetBase))
-	#print(a1)
-	#print(components[1] + '\n')
-	if targetBase==2:
-		if hasDec > 1:
-			a2 = negativePowerPolynomial('0.'+components[1],sourceBase,targetBase)
-			newcomps=re.split("\.",a2)
-			outNum = a1+'.'+newcomps[1]
+	testSplit = re.split("/",somestringwithnumbers)
+	if len(testSplit) > 1:
+		newNum = str(float(testSplit[0])/float(testSplit[1]))
+		components = re.split("\.",newNum)
+	if not re.match('-',components[0]) is None:
+		components[0] = re.split('-',components[0])[1]
+		if targetBase == 2:
+			outstr = base2tobase10routine(components,sourceBase,targetBase)
+			return '-'+outstr
+		elif targetBase == 10:
+			outstr = base10tobase2routine(components,sourceBase,targetBase)
+			return '-'+outstr
 		else:
-			outNum = a1
-		#print(a2)
-		return outNum
-	elif targetBase==10:
-		if hasDec > 1:
-			a2 = b10decimals('0.'+components[1],sourceBase,targetBase)
-			#print(a2)
-			newcomps = re.split("\.",a2)
-			outNum = a1+'.'+newcomps[1]
-		else:
-			outNum = a1
-		return outNum
+			return ' Error! Choose Base 10 or 2 as source or target'
 	else:
-		return ' Error! Choose Base 10 or 2 as source or target'
-	
+		if targetBase == 2:
+			return base2tobase10routine(components,sourceBase,targetBase)
+		elif targetBase == 10:
+			return base10tobase2routine(components,sourceBase,targetBase)
+		else:
+			return ' Error! Choose Base 10 or 2 as source or target'
+    
+def base2tobase10routine(components,sourceBase,targetBase):
+	a1 = str(integerPolynomial(components[0],sourceBase,targetBase))
+	hasDec = len(components)
+	if hasDec > 1:
+		a2 = negativePowerPolynomial('0.'+components[1],sourceBase,targetBase)
+		newcomps=re.split("\.",a2)
+		outNum = a1+'.'+newcomps[1]
+	else:
+		outNum = a1#print(a2)
+	return outNum
+
+def base10tobase2routine(components,sourceBase,targetBase):
+	a1 = str(integerPolynomial(components[0],sourceBase,targetBase))
+	hasDec = len(components)
+	if hasDec > 1:
+		a2 = b10decimals('0.'+components[1],sourceBase,targetBase)
+		#print(a2)
+		newcomps = re.split("\.",a2)
+		outNum = a1+'.'+newcomps[1]
+	else:
+		outNum = a1
+	return outNum
+
 
 def integerPolynomial(intString, sourceBase, targetBase):
+	#print(intString)
 	theVal = int(intString)
 	return positivePowerPolynomial(theVal, sourceBase, targetBase)
 
 def positivePowerPolynomial(num, sourceBase, targetBase):
 	anum = num
-	if (anum//targetBase) == 0:
+	# note:  python3 integer division returns -1 for -1//2, 0 for 1//2
+	if (abs(anum)//targetBase) == 0:
 		return anum % targetBase
 	return (anum % targetBase) + sourceBase*positivePowerPolynomial(anum//targetBase,sourceBase,targetBase)
 

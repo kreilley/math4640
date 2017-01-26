@@ -130,7 +130,7 @@ int polyeval(int beta, int anum)
 {
     int num = anum;
     if(num/beta ==0)
-        return num;
+	return num;
     return (num % 10) + polyeval(beta,(num/10))*beta;
 }
 // test fcn for polynomial evaluation function
@@ -165,7 +165,10 @@ int convertBase(int sourceNum, int sourceBase, int targetBase)
 {
     int num = sourceNum;
     if(num/targetBase ==0)
-        return num % targetBase;
+    { 
+	printf("\n current mod is: %d\n",(num % targetBase));
+	return num % targetBase;
+    }
     return (num % targetBase) +
     convertBase(num/targetBase,sourceBase,targetBase)*sourceBase;
 }
