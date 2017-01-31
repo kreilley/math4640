@@ -34,6 +34,9 @@ def main():
 	xvars1 = [1.,3./2,0.,2.]
 	fvars1 = [3.,13./4,3.,5./3]
 	print(simpleDividedDifference(xvars1,fvars1))
+	xvars2 = [-1.,0.,1.,2.,3.]
+	fvars2 = [2.,1.,0.,4.,9.]
+	print(simpleDividedDifference(xvars2,fvars2))
 
 
 if __name__ == "__main__":
