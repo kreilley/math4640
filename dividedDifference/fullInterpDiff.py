@@ -10,7 +10,7 @@ class polynomial():
 		self.x = x
 		self.fx = fx
 		self.t = list()
-		self.ft = list()
+		self.ft = list()# note that lists 
 
 	def simpleDividedDifference(self,x,fx):
 		d = list()
@@ -36,18 +36,19 @@ class polynomial():
 
 	def EvalForT(self,t):
 		self.t.append(t)
-		n = len(self.x)-1
-		print("n = {}",n)
-		P = self.coeffs[-1]
-		print("highest order coeff = {}",P)
-		for i in range(n,0,-1):
-			P = self.coeffs[i]+(t-self.x[i])*P
-			print(self.coeffs[i])
-			print(self.x[i])
-			print(P)
-			print("\n")
-		self.ft.append(P)
+		self.ft.append(self.polyevaluator(self.coeffs,self.x,t))
 
+	def polyevaluator(self,c,x,t):
+		temp1 = c[:]# copy arrays
+		temp2 = x[:]
+		p = temp1.pop(0)# shorten arrays and get first element
+		q = temp2.pop(0)
+		if len(temp1)==0:
+			print("p = ",p)
+			print("t = ",t)
+			print("q = ",q)
+			return p*(t-q)
+		return p + (t-q)*self.polyevaluator(temp1,temp2,t)
 
 if __name__=="__main__":
 	xvars = [-2.,-1.,0.,1.,2.,3.]
@@ -62,12 +63,7 @@ if __name__=="__main__":
 	fvars2 = [2.,1.,0.,4.,9.]
 	p2 = polynomial(xvars2,fvars2)
 	print(p2.coeffs)
-	p2.EvalForT(0.)
+	for t in xvars2:
+		p2.EvalForT(t)
 	print(p2.ft)
-
-
-
-
-
-
 
