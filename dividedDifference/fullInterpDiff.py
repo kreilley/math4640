@@ -50,6 +50,17 @@ class polynomial():
 			return p*(t-q)
 		return p + (t-q)*self.polyevaluator(temp1,temp2,t)
 
+	def testlooper(self,t):
+		return self.longEvaluator(self.coeffs,self.x,t)
+	
+	def longEvaluator(self,c,x,t):
+		np1 = len(x)
+		p = c[np1-1]
+		for ndx in range((np1-1),0,-1):
+			p = c[ndx] + (t - x[ndx])*p
+		return p
+
+
 if __name__=="__main__":
 	xvars = [-2.,-1.,0.,1.,2.,3.]
 	fvars = [-5.,1.,1.,1.,7.,25.]
@@ -63,7 +74,13 @@ if __name__=="__main__":
 	fvars2 = [2.,1.,0.,4.,9.]
 	p2 = polynomial(xvars2,fvars2)
 	print(p2.coeffs)
+	print("using recursive eval:  ")
 	for t in xvars2:
 		p2.EvalForT(t)
 	print(p2.ft)
+	print("using forloop eval:  ")
+	altouts = list()
+	for t in xvars2:
+		altouts.append(p2.testlooper(t))
+	print(altouts)
 
